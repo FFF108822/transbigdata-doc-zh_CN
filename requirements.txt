@@ -10,3 +10,4 @@ scikit-opt
 ipython
 sphinx
 numpydoc
+pydata-sphinx-theme
