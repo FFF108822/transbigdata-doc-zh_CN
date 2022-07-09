@@ -11,3 +11,4 @@ ipython
 sphinx
 numpydoc
 pydata-sphinx-theme
+numpydocIPython
