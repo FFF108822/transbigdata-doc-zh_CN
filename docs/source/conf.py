@@ -19,6 +19,7 @@
 import sys
 import os
 
+
 project = 'TransBigData'
 copyright = '2022, Qing Yu'
 author = 'Qing Yu'
@@ -82,6 +83,7 @@ html_static_path = ['_static']
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx.ext.mathjax',
+              'numpydoc'
               'sphinx.ext.inheritance_diagram',
               "IPython.sphinxext.ipython_directive",
               "IPython.sphinxext.ipython_console_highlighting",
