@@ -23,16 +23,12 @@ GIS处理
 点与点匹配（DataFrame与DataFrame）
 ----------------------------------
 
-| 导入TransBigData包
+| 导入TransBigData包。
+| 生成两个GeoDataFrame表，用于测试
 
 .. ipython:: python
 
     import transbigdata as tbd
-
-生成两个GeoDataFrame表，但它们只有经纬度列
-
-.. ipython:: python
-
     import pandas as pd
     import geopandas as gpd
     from shapely.geometry import LineString

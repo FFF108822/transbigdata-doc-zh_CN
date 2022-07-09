@@ -78,12 +78,14 @@ latex_logo = '_static/logo-wordmark-dark.png'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
+ipython_savefig_dir = '../'
 
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx.ext.mathjax',
+              'sphinx.ext.inheritance_diagram',
               'numpydoc',
+              'matplotlib.sphinxext.plot_directive',
               "IPython.sphinxext.ipython_directive",
               "IPython.sphinxext.ipython_console_highlighting",
               ]

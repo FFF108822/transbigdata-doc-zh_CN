@@ -53,7 +53,26 @@ def clean_taxi_status(data, col=['VehicleNum', 'Time', 'OpenStatus'],
     data1 : DataFrame
         清洗后的数据
     '''
-    pass
+    data1 = data.copy()
+    [VehicleNum, Time, OpenStatus] = col
+    if timelimit:
+        data1[Time] = pd.to_datetime(data1[Time])
+        data1 = data1[
+            -((data1[OpenStatus].shift(-1) == data1[OpenStatus].shift()) &
+              (data1[OpenStatus] != data1[OpenStatus].shift()) &
+              (data1[VehicleNum].shift(-1) == data1[VehicleNum].shift()) &
+              (data1[VehicleNum] == data1[VehicleNum].shift()) &
+              ((data1[Time].shift(-1) - data1[Time].shift()
+                ).dt.total_seconds() <= timelimit)
+              )]
+    else:
+        data1 = data1[
+            -((data1[OpenStatus].shift(-1) == data1[OpenStatus].shift()) &
+              (data1[OpenStatus] != data1[OpenStatus].shift()) &
+              (data1[VehicleNum].shift(-1) == data1[VehicleNum].shift()) &
+              (data1[VehicleNum] == data1[VehicleNum].shift()))]
+    return data1
+
 
 
 def taxigps_to_od(data,
@@ -73,7 +92,24 @@ def taxigps_to_od(data,
     oddata : DataFrame
         OD数据
     '''
-    pass
+    [VehicleNum, Stime, Lng, Lat, OpenStatus] = col
+    data1 = data[col]
+    data1 = data1.sort_values(by=[VehicleNum, Stime])
+    data1['StatusChange'] = data1[OpenStatus] - data1[OpenStatus].shift()
+    oddata = data1[((data1['StatusChange'] == -1) |
+                   (data1['StatusChange'] == 1)) &
+                   (data1[VehicleNum].shift() == data1[VehicleNum])]
+    oddata = oddata.drop([OpenStatus], axis=1)
+    oddata.columns = [VehicleNum, 'stime', 'slon', 'slat', 'StatusChange']
+    oddata['etime'] = oddata['stime'].shift(-1)
+    oddata['elon'] = oddata['slon'].shift(-1)
+    oddata['elat'] = oddata['slat'].shift(-1)
+    oddata = oddata[(oddata['StatusChange'] == 1) &
+                    (oddata[VehicleNum] == oddata[VehicleNum].shift(-1))]
+    oddata = oddata.drop('StatusChange', axis=1)
+    oddata['ID'] = range(len(oddata))
+    return oddata
+
 
 
 def taxigps_traj_point(data, oddata,
