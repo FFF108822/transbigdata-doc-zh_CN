@@ -18,15 +18,6 @@
 # -- Project information -----------------------------------------------------
 import sys
 import os
-from unittest.mock import MagicMock
-
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-        return MagicMock()
-
-MOCK_MODULES = ['pygtk', 'gtk', 'gobject', 'argparse', 'numpy', 'pandas']
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 project = 'TransBigData'
 copyright = '2022, Qing Yu'
@@ -92,7 +83,6 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx.ext.mathjax',
               'sphinx.ext.inheritance_diagram',
-              'numpydoc',
               "IPython.sphinxext.ipython_directive",
               "IPython.sphinxext.ipython_console_highlighting",
               'matplotlib.sphinxext.plot_directive',
