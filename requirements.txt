@@ -8,6 +8,6 @@ keplergl
 igraph
 scikit-opt
 ipython
-
 sphinx==3.5.3
 numpydoc==1.1.0
+Jinja2<3.1
