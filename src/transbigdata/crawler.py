@@ -1,0 +1,388 @@
+'''
+BSD 3-Clause License
+
+Copyright (c) 2021, Qing Yu
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+'''
+
+import pandas as pd
+import numpy as np
+import geopandas as gpd
+from shapely.geometry import Polygon, LineString
+import urllib.request
+from urllib import parse
+import urllib
+import json
+import re
+from .plotmap import read_mapboxtoken
+from .coordinates import (
+    gcj02towgs84,
+    bd09towgs84,
+    bd09mctobd09,
+    wgs84togcj02
+)
+
+
+def getadmin(keyword, ak, jscode='', subdistricts=False):
+    '''
+    输入关键词与高德ak，抓取行政区划gis
+
+    Parameters
+    -------
+    keywords : str
+        关键词，可以是名称，如"深圳市"，或行政区划编号，如440500
+    ak : str
+        高德ak
+    jscode : str
+        安全密钥，自2021年12月02日升级，升级之后所申请的 key 必须配备安全密钥 jscode 一起使用
+    subdistricts : bool
+        是否输出子行政区划的信息
+
+    Returns
+    -------
+    admin : GeoDataFrame
+        行政区划信息
+    districts : DataFrame
+        子行政区划的信息，利用这个可以进一步抓下一级的行政区划
+    '''
+
+    # API url
+    url = 'https://restapi.amap.com/v3/config/district?'
+    # Condition
+    dict1 = {
+        'subdistrict': '3',
+        'showbiz': 'false',
+        'extensions': 'all',
+        'key': ak,
+        'jscode': jscode,
+        's': 'rsv3',
+        'output': 'json',
+        'level': 'district',
+        'keywords': keyword,
+        'platform': 'JS',
+        'logversion': '2.0',
+        'sdkversion': '1.4.10'
+    }
+    url_data = parse.urlencode(dict1)
+    url = url+url_data
+    request = urllib.request.Request(url)
+    response = urllib.request.urlopen(request)
+    webpage = response.read()
+    result = json.loads(webpage.decode('utf8', 'ignore'))
+    # Organize Data
+    datas = []
+    k = 0
+    polyline = result['districts'][k]['polyline']
+    polyline1 = polyline.split('|')
+    res = []
+    for polyline2 in polyline1:
+        polyline2 = polyline2.split(';')
+        p = []
+        for i in polyline2:
+            a, b = i.split(',')
+            p.append([float(a), float(b)])
+        x = pd.DataFrame(p)
+        x[0], x[1] = gcj02towgs84(x[0], x[1])
+        p = x.values
+        res.append(Polygon(p))
+    data = pd.DataFrame()
+    data1 = pd.DataFrame()
+    data1['geometry'] = res
+    data1 = gpd.GeoDataFrame(data1)
+    poly = data1.unary_union
+    data['geometry'] = [poly]
+    try:
+        data['citycode'] = result['districts'][k]['citycode']
+    except Exception:
+        pass
+    try:
+        data['adcode'] = result['districts'][k]['adcode']
+    except Exception:
+        pass
+    try:
+        data['name'] = result['districts'][k]['name']
+    except Exception:
+        pass
+    try:
+        data['level'] = result['districts'][k]['level']
+    except Exception:
+        pass
+    try:
+        data['center'] = result['districts'][k]['center']
+    except Exception:
+        pass
+    datas.append(data)
+    datas = pd.concat(datas)
+    admin = gpd.GeoDataFrame(datas)
+    if subdistricts:
+        districts = result['districts'][k]['districts']
+        districts = pd.DataFrame(districts)
+        return admin, districts
+    else:
+        return admin
+
+
+def getbusdata(city, keywords, accurate=True):
+    '''
+    通过输入城市与关键词，获取公交线路的线型与站点
+
+    Parameters
+    -------
+    city : str
+        城市
+    keywords : str或List
+        关键词，线路名称，支持单个关键词或多个关键词
+    accurate : bool
+        是否精确匹配，默认True
+
+    Returns
+    -------
+    data : GeoDataFrame
+        生成的公交线路
+    stop : GeoDataFrame
+        生成的公交站点
+    '''
+    def getlineuid(keyword, c, acc=True):
+        url = 'http://map.baidu.com/?qt=s&wd=' + \
+            urllib.parse.quote(keyword)+'&c='+c+'&from=webmap'
+        response1 = urllib.request.urlopen(url)
+        searchinfo = json.loads(response1.read().decode('utf8'))
+        try:
+            res = pd.DataFrame(searchinfo['content'])
+            if acc:
+                res = list(res[(res['geo_type'] == 1) &
+                           (res['acc_flag'] == 1)]['uid'])
+                return res
+            else:
+                res = list(res[res['geo_type'] == 1]['uid'])
+                return res
+        except Exception:
+            return []
+
+    def getcitycode(c):
+        url = 'http://map.baidu.com/?qt=s&wd='+urllib.parse.quote(c)
+        response1 = urllib.request.urlopen(url, timeout=60)
+        searchinfo = json.loads(response1.read().decode('utf8'))
+        return str(searchinfo['content']['code'])
+
+    def getlinegeo(uid, c):
+        url = 'http://map.baidu.com/?qt=bsl&uid='+uid+'&c='+c+"&auth=1"
+        response = urllib.request.urlopen(url, timeout=60)
+        searchinfo = json.loads(response.read().decode('utf8'))
+        linename = searchinfo['content'][0]['name']
+        stations = searchinfo['content'][0]['stations']
+        geo = searchinfo['content'][0]['geo'].split('|')[2][:-1].split(',')
+        stationgeo = []
+        stationnames = []
+        for station in stations:
+            stationname = station['name']
+            coo = station['geo'].split(';')[1].split('|')[0]
+            stationnames.append(stationname)
+            stationgeo.append(coo)
+        coo = []
+        t = 0
+        cood = ''
+        for each in geo:
+            t += 1
+            cood += each + ','
+            if t == 2:
+                t = 0
+                coo.append(cood[:-1])
+                cood = ''
+
+        def coodconvert(coo):
+            coo = pd.DataFrame(
+                list(pd.DataFrame(coo)[0].str.split(','))).astype(float)
+            coo[0], coo[1] = bd09mctobd09(coo[0], coo[1])
+            return list(coo[0].astype(str)+','+coo[1].astype(str))
+        return (
+            linename,
+            coodconvert(coo),
+            stationnames,
+            coodconvert(stationgeo)
+        )
+    print('Obtaining city id:', city, end='')
+    linenames = []
+    lines = []
+    c = getcitycode(city)
+    print('success')
+    stop = []
+    uids = []
+    if type(keywords) != list:
+        keywords = [str(keywords)]
+    for keyword in keywords:
+        print(keyword)
+        for uid in getlineuid(keyword, c, accurate):
+            if uid not in uids:
+                try:
+                    linename, coo, stationnames, stationgeo = getlinegeo(
+                        uid, c)
+                    coo = pd.DataFrame(
+                        list(pd.DataFrame(coo)[0].str.split(',')))
+                    coo[0], coo[1] = bd09towgs84(coo[0], coo[1])
+                    line = LineString(coo.values)
+                    linenames.append(linename)
+                    lines.append(line)
+                    stops = pd.DataFrame({'stationnames': stationnames})
+                    stops['linename'] = linename
+                    stops['geo'] = stationgeo
+                    stops['lon'] = stops['geo'].apply(
+                        lambda row: row.split(',')[0])
+                    stops['lat'] = stops['geo'].apply(
+                        lambda row: row.split(',')[1])
+                    stop.append(stops)
+                    print(linename+' success')
+                    uids.append(uid)
+                except Exception:
+                    pass
+    if len(stop) == 0:
+        print('No such busline')
+        return gpd.GeoDataFrame(), gpd.GeoDataFrame()
+    data = gpd.GeoDataFrame()
+    data['linename'] = linenames
+    data['geometry'] = lines
+    data['city'] = city
+    stop = pd.concat(stop)
+    stop['lon'], stop['lat'] = bd09towgs84(stop['lon'], stop['lat'])
+    stop['geometry'] = gpd.points_from_xy(stop['lon'], stop['lat'])
+    stop = stop.drop('geo', axis=1)
+    stop = gpd.GeoDataFrame(stop)
+    data['line'] = data['linename'].str.split('(').apply(lambda r: r[0])
+    stop['line'] = stop['linename'].str.split('(').apply(lambda r: r[0])
+    stop['id'] = range(len(stop))
+    stop['id'] = stop.groupby('linename')['id'].rank()
+    data = data.drop_duplicates(subset=['linename'])
+    stop = stop.drop_duplicates(subset=['linename', 'stationnames'])
+    return data, stop
+
+
+def get_isochrone_amap(lon, lat, reachtime, ak, jscode='', mode=2):
+    '''
+    获取高德地图等时圈，支持`公交`、`地铁`、`公交+地铁`三种模式
+
+    Parameters
+    -------
+    lon : float
+        起点经度(WGS84)
+    lat : float
+        起点纬度(WGS84)
+    reachtime : number
+        等时圈时间
+    ak : str
+        高德地图ak
+    jscode : str
+        安全密钥，自2021年12月02日升级，升级之后所申请的 key 必须配备安全密钥 jscode 一起使用
+    mode : int or str
+        出行方式，0`公交`、1`地铁`、2`公交+地铁`
+
+    Returns
+    -------
+    isochrone : GeoDataFrame
+        等时圈的GeoDataFrame(WGS84)
+    '''
+    strategy = str(mode)
+    if strategy not in ['0', '1', '2']:
+        raise ValueError(
+            'Travel mode, should be 0(bus), 1(subway), 2(bus+subway)')
+    lon, lat = wgs84togcj02(lon, lat)
+    url = 'http://restapi.amap.com/v3/direction/reachcircle?'
+    dict1 = {
+        'key': ak,
+        'jscode': jscode,
+        'location': str(round(float(lon), 6))+','+str(round(float(lat), 6)),
+        'time': reachtime,
+        'output': 'json',
+        's': 'rsv3',
+        'extensions': 'all',
+        'strategy': str(strategy)
+    }
+    url_data = parse.urlencode(dict1)
+    url = url+url_data
+    request = urllib.request.Request(url)
+    response = urllib.request.urlopen(request, timeout=10)
+    webpage = response.read()
+    result = json.loads(webpage.decode('utf8', 'ignore'))
+    P_all = []
+    for each in result['polylines']:
+        data = each['outer']
+        ll = re.split('[,;]', data)
+        ll = np.reshape(ll, (int(len(ll)/2), 2))
+        l2 = []
+        for i in ll:
+            l2.append((gcj02towgs84(float(i[0]), float(i[1]))))
+        P_all.append(Polygon(l2))
+
+    a = gpd.GeoSeries(P_all)
+    g = gpd.GeoSeries(a[a.is_valid].unary_union)
+    g = gpd.GeoDataFrame(g, columns=['geometry'])
+    g['lon'] = lon
+    g['lat'] = lat
+    g['reachtime'] = reachtime
+    return g
+
+
+def get_isochrone_mapbox(lon, lat, reachtime, access_token='auto',
+                         mode='driving'):
+    '''
+    获取mapbox地图等时圈，支持驾车、步行、骑行
+
+    Parameters
+    -------
+    lon : float
+        起点经度(WGS84)
+    lat : float
+        起点纬度(WGS84)
+    reachtime : number
+        等时圈时间
+    access_token : str
+        Mapbox的access token，如果设置为 `auto`则会自动读取已经保存的access token
+    mode : bool
+        出行方式，取值为 `driving`， `walking` 或 `cycling`
+
+    Returns
+    -------
+    isochrone : GeoDataFrame
+        等时圈的GeoDataFrame(WGS84)
+    '''
+    if access_token == 'auto':
+        access_token = read_mapboxtoken()
+    if mode not in ['driving', 'walking', 'cycling']:
+        raise ValueError(
+            'Travel mode should be `driving`, `walking` or `cycling`')
+    url = 'https://api.mapbox.com/isochrone/v1/mapbox/'+mode+'/' +\
+        str(lon)+','+str(lat)+'?contours_minutes='+str(reachtime) +\
+        '&polygons=true&access_token='+access_token
+    request = urllib.request.Request(url)
+    response = urllib.request.urlopen(request, timeout=1)
+    webpage = response.read()
+    result = webpage.decode('utf8', 'ignore')
+    isochrone = gpd.GeoDataFrame.from_features(json.loads(result))
+    isochrone['lon'] = lon
+    isochrone['lat'] = lat
+    isochrone['reachtime'] = reachtime
+    return isochrone[['lon', 'lat', 'reachtime', 'geometry']]
