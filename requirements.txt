@@ -5,3 +5,4 @@ scipy
 ipython
 sphinx
 numpydoc
+nbsphinx
