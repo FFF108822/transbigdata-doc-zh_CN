@@ -85,6 +85,8 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
               'sphinx.ext.inheritance_diagram',
               'numpydoc',
+              'nbsphinx',
+               'sphinx_gallery.load_style',
               'matplotlib.sphinxext.plot_directive',
               "IPython.sphinxext.ipython_directive",
               "IPython.sphinxext.ipython_console_highlighting",
@@ -92,4 +94,5 @@ extensions = ['sphinx.ext.autodoc',
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
+sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../../src'))

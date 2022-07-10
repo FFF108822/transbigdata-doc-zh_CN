@@ -7,7 +7,7 @@
 | 下面我们介绍如何使用TransBigData包，调用其中的函数实现对出租车GPS数据的快速处理。
 | 首先我们引入TransBigData包，并读取数据:
 
-.. ipython:: python
+::
 
     import transbigdata as tbd
     import pandas as pd
@@ -18,7 +18,7 @@
     data
 
 
-.. ipython:: python
+::
 
     #读取区域信息
     import geopandas as gpd
@@ -34,7 +34,7 @@
 
 TransBigData包也集成了数据预处理的常用方法。其中， :func:`transbigdata.clean_outofshape` 方法输入数据和研究范围区域信息，筛选剔除研究范围外的数据。而 :func:`transbigdata.clean_taxi_status` 方法则可以剔除的载客状态瞬间变化的记录。在使用预处理的方法时，需要传入相应的列，代码如下：
 
-.. ipython:: python
+::
 
     #数据预处理
     #剔除研究范围外的数据
@@ -47,7 +47,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 以栅格形式表达数据分布是最基本的表达方法。GPS数据经过栅格化后，每个数据点都含有对应的栅格信息，采用栅格表达数据的分布时，其表示的分布情况与真实情况接近。如果要使用TransBigData工具进行栅格划分，首先需要确定栅格化的参数（可以理解为定义了一个栅格坐标系），参数可以帮助我们快速进行栅格化:
 
-.. ipython:: python
+::
 
     #栅格化
     #定义范围，获取栅格化参数
@@ -59,7 +59,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 取得栅格化参数后，将GPS对应至栅格，由LONCOL与LATCOL两列共同指定一个栅格:
 
-.. ipython:: python
+::
 
     #将GPS栅格化
     data['LONCOL'],data['LATCOL'] = tbd.GPS_to_grid(data['lon'],data['lat'],params)
@@ -67,7 +67,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 统计每个栅格的数据量:
 
-.. ipython:: python
+::
 
     #集计栅格数据量
     datatest = data.groupby(['LONCOL','LATCOL'])['VehicleNum'].count().reset_index()
@@ -75,7 +75,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 生成栅格的地理图形，并将它转化为GeoDataFrame:
 
-.. ipython:: python
+::
 
     #生成栅格地理图形
     datatest['geometry'] = tbd.grid_to_polygon([datatest['LONCOL'],datatest['LATCOL']],params)
@@ -86,7 +86,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 绘制栅格测试是否成功:
 
-.. ipython:: python
+::
 
     #绘制
     @savefig taxi-datatest.png width=4in
@@ -100,7 +100,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 使用 :func:`transbigdata.taxigps_to_od` 方法，传入对应的列名，即可提取出行OD:
 
-.. ipython:: python
+::
 
     #从GPS数据提取OD
     oddata = tbd.taxigps_to_od(data,col = ['VehicleNum','time','lon','lat','OpenStatus'])
@@ -109,7 +109,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 对提取出的OD进行OD的栅格集计,并生成GeoDataFrame
 
-.. ipython:: python
+::
     :okwarning:
 
     #栅格化OD并集计
@@ -124,7 +124,7 @@ TransBigData包也集成了数据预处理的常用方法。其中， :func:`tra
 
 TransBigData包也提供了将OD直接集计到小区的方法
 
-.. ipython:: python
+::
     :okwarning:
 
     #OD集计到小区（在不传入栅格化参数时，直接用经纬度匹配）
@@ -134,7 +134,7 @@ TransBigData包也提供了将OD直接集计到小区的方法
 
 
 
-.. ipython:: python
+::
     :okwarning:
 
     #OD集计到小区（传入栅格化参数时，先栅格化后匹配，可加快匹配速度，数据量大时建议使用）
@@ -184,7 +184,7 @@ tbd中提供了地图底图加载和比例尺指北针的功能。使用这个�
 
 使用 :func:`transbigdata.taxigps_traj_point` 方法，输入数据和OD数据，可以提取出轨迹点
 
-.. ipython:: python
+::
 
     data_deliver,data_idle = tbd.taxigps_traj_point(data,oddata,col=['VehicleNum', 'time', 'lon', 'lat', 'OpenStatus'])
     data_deliver
@@ -193,7 +193,7 @@ tbd中提供了地图底图加载和比例尺指北针的功能。使用这个�
 
 对轨迹点生成载客与空载的轨迹
 
-.. ipython:: python
+::
 
     traj_deliver = tbd.points_to_traj(data_deliver, col=['lon', 'lat', 'ID'])
     @savefig taxi-traj_deliver.png width=4in
@@ -201,7 +201,7 @@ tbd中提供了地图底图加载和比例尺指北针的功能。使用这个�
 
 
 
-.. ipython:: python
+::
 
     traj_idle = tbd.points_to_traj(data_idle, col=['lon', 'lat', 'ID'])
     @savefig taxi-traj_idle.png width=4in
