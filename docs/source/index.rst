@@ -41,7 +41,7 @@ TransBigData简介
     import transbigdata as tbd
     #读取数据    
     import pandas as pd
-    data = pd.read_csv('../example/data/TaxiData-Sample.csv',header = None) 
+    data = pd.read_csv('data/TaxiData-Sample.csv',header = None) 
     data.columns = ['VehicleNum','time','lon','lat','OpenStatus','Speed'] 
     data
 
