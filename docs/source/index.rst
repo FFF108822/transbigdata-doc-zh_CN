@@ -151,12 +151,6 @@ TransBigData支持三角形、六边形网格，也支持为网格赋予旋转�
    :maxdepth: 2
 
    gallery/index.rst
-   example-taxi/example-taxi.rst
-   example-busgps/example-busgps.rst
-   metromodel/metromodel.rst
-   Example-pNEUMA/Example-pNEUMA.rst
-   example-bikesharing/example-bikesharing.rst
-   Example-Mobile/Example-Mobile.rst
    
 通用方法
 =========================
