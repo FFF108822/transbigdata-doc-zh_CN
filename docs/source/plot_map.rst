@@ -54,14 +54,6 @@
 .. image:: plot_map/output_6_0.png
 
 
-
-地图底图加载
-=============================
-
-TransBigData包的底图绘制功能由plot_map包提供。首先确保你的plot_map包在0.3.3版本以上::
-
-    pip install -U plot-map
-
 .. autofunction:: plot_map
 
 底图样式1：streets
