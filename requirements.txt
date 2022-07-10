@@ -6,3 +6,4 @@ ipython
 sphinx
 numpydoc
 nbsphinx
+sphinx_gallery
