@@ -35,7 +35,7 @@ TransBigData简介
 
 下面例子展示如何使用TransBigData工具快速地从出租车GPS数据中提取出行OD
 
-.. ipython:: python
+::
 
     #导入TransBigData包
     import transbigdata as tbd
@@ -48,7 +48,7 @@ TransBigData简介
 
 首先定义研究范围，并使用 :func:`transbigdata.clean_outofbounds` 剔除研究范围外的数据
 
-.. ipython:: python
+::
 
    #定义研究范围
    bounds = [113.75, 22.4, 114.62, 22.86]
@@ -58,7 +58,7 @@ TransBigData简介
 
 以栅格形式表达数据分布是最基本的表达方法。GPS数据经过栅格化后，每个数据点都含有对应的栅格信息，采用栅格表达数据的分布时，其表示的分布情况与真实情况接近。如果要使用 TransBigData工具进行栅格划分，首先需要确定栅格化的参数（可以理解为定义了一个栅格坐标系），参数可以帮助我们快速进行栅格化:
 
-.. ipython:: python
+::
 
    #获取栅格化参数
    params = tbd.area_to_params(bounds,accuracy = 1000)
@@ -66,7 +66,7 @@ TransBigData简介
 
 取得栅格化参数后，将GPS对应至栅格。使用 :func:`transbigdata.GPS_to_grid` 方法,该方法会生成 LONCOL列与 LATCOL列，并由这两列共同指定一个栅格:
 
-.. ipython:: python
+::
 
    #将GPS数据对应至栅格
    data['LONCOL'],data['LATCOL'] = tbd.GPS_to_grid(data['lon'],data['lat'],params)
@@ -74,7 +74,7 @@ TransBigData简介
 
 聚合集计栅格内数据量，并为栅格生成几何图形：
 
-.. ipython:: python
+::
 
    #聚合集计栅格内数据量
    grid_agg = data.groupby(['LONCOL','LATCOL'])['VehicleNum'].count().reset_index()
@@ -90,7 +90,7 @@ TransBigData简介
 
 TransBigData支持三角形、六边形网格，也支持为网格赋予旋转角度。我们可以通过以下方式改变栅格参数来进行设定
 
-.. ipython:: python
+::
 
    #设置为六边形网格
    params['method'] = 'hexa'
@@ -101,7 +101,7 @@ TransBigData支持三角形、六边形网格，也支持为网格赋予旋转�
 
 然后我们可以再次进行匹配、集计:
 
-.. ipython:: python
+::
 
    #三角形和六边形网格要求三列存储栅格ID信息
    data['loncol_1'],data['loncol_2'],data['loncol_3'] = tbd.GPS_to_grid(data['lon'],data['lat'],params)
