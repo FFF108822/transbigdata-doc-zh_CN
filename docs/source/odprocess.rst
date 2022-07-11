@@ -5,6 +5,12 @@
 数据聚合集计
 ***************
 
+.. autosummary::
+
+    dataagg
+    odagg_grid
+    odagg_shape
+    
 数据集计
 ==========
 

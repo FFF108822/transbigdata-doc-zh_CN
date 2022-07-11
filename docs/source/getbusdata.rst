@@ -3,6 +3,13 @@
 数据获取
 ******************************
 
+.. autosummary::
+
+    getbusdata
+    getadmin
+    get_isochrone_amap
+    get_isochrone_mapbox
+
 获取公交线路
 =============================
 

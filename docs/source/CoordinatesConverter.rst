@@ -5,6 +5,18 @@
 坐标距离
 ******************************
 
+.. autosummary::
+    
+    gcj02tobd09
+    gcj02towgs84
+    wgs84togcj02
+    wgs84tobd09
+    bd09togcj02
+    bd09towgs84
+    bd09mctobd09
+    transform_shape
+    getdistance
+
 火星坐标系互转
 =============================
 
@@ -12,6 +24,8 @@
 --------------------------
 
 TransBigData包提供了GCJ02,BD09,BD09mc,WGS94坐标系互转。
+
+
 
 .. autofunction:: gcj02tobd09
 

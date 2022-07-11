@@ -5,12 +5,31 @@
 数据栅格化
 ***************
 
+
+.. autosummary::
+
+    area_to_grid
+    area_to_params
+    GPS_to_grid
+    grid_to_centre
+    grid_to_polygon
+    grid_to_area
+    grid_to_params
+    grid_params_optimize
+    geohash_encode
+    geohash_decode
+    geohash_togrid
+
 栅格时空数据处理框架
 =============================
 
-栅格处理方法之间的关系：
+栅格处理方法之间的关系
+
+
+
 
 .. image:: grids/1648715064154.png
+
 
 .. autofunction:: area_to_grid
 
@@ -25,11 +44,6 @@
 .. autofunction:: grid_to_area
     
 .. autofunction:: grid_to_params
-
-
-
-栅格参数的优化
-=====================
 
 .. autofunction:: grid_params_optimize
 
@@ -51,7 +65,7 @@ geohash length(precision) lat bits lng bits lat error lng error km error
 8                         20       20       ±0.000085 ±0.00017  ±0.019
 ========================= ======== ======== ========= ========= ========
 
-TransBigData包中也提供了geohash的处理功能，主要包括三个函数：
+TransBigData包中也提供了geohash的处理功能，主要包括以下方法：
 
 
 .. autofunction:: geohash_encode
@@ -267,6 +281,18 @@ TransBigData包中也提供了geohash的处理功能，主要包括三个函数�
 
 旧方法
 =============================
+
+以下函数名称已更变，旧的方法仍然保留，但建议使用新的函数名称
+
+.. autosummary::
+
+    rect_grids
+    grid_params
+    GPS_to_grids
+    grids_centre
+    gridid_to_polygon
+    gridid_sjoin_shape
+    regenerate_params
 
 .. autofunction:: rect_grids
 

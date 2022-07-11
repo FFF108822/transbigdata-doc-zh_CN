@@ -4,6 +4,12 @@
 数据可视化
 ******************************
 
+.. autosummary::
+    
+    visualization_data
+    visualization_trip
+    visualization_od
+
 在jupyter中显示可视化的设置
 --------------------------------------
 
