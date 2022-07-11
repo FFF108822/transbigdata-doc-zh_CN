@@ -2,7 +2,7 @@
 
 
 .. currentmodule:: transbigdata
-  
+
 .. autosummary::
 
     ckdnearest
@@ -10,6 +10,9 @@
     ckdnearest_line
     splitline_with_length
     merge_polygon
+    polyon_exterior
+    ellipse_params
+    ellipse_plot
 
 ******************************
 GIS处理

@@ -38,7 +38,9 @@ from .preprocess import id_reindex
 
 def traj_densify(data, col=['Vehicleid', 'Time', 'Lng', 'Lat'], timegap=15):
     '''
-    轨迹点增密，确保每隔timegap秒会有一个轨迹点
+    轨迹点增密
+    
+    确保每隔timegap秒会有一个轨迹点
 
     Parameters
     -------
@@ -95,7 +97,9 @@ def traj_densify(data, col=['Vehicleid', 'Time', 'Lng', 'Lat'], timegap=15):
 def traj_sparsify(data, col=['Vehicleid', 'Time', 'Lng', 'Lat'], timegap=15,
                   method='subsample'):
     '''
-    轨迹点稀疏化。轨迹数据采样间隔过高的时候，数据量太大，不便于分析。这个函数可以将采样间隔扩大，缩减数据量
+    轨迹点稀疏化
+    
+    轨迹数据采样间隔过高的时候，数据量太大，不便于分析。这个函数可以将采样间隔扩大，缩减数据量
 
     Parameters
     -------
@@ -258,6 +262,8 @@ def traj_sparsify(data, col=['Vehicleid', 'Time', 'Lng', 'Lat'], timegap=15,
 
 def points_to_traj(traj_points, col=['Lng', 'Lat', 'ID'], timecol=None):
     '''
+    轨迹线型生成
+
     输入轨迹点，生成轨迹线型的GeoDataFrame
 
     Parameters
@@ -313,7 +319,9 @@ def points_to_traj(traj_points, col=['Lng', 'Lat', 'ID'], timecol=None):
 
 def dumpjson(data, path):
     '''
-    输入json数据，存储为文件。这个方法主要是解决numpy数值型无法兼容json包报错的问题
+    将json数据存储为文件
+    
+    这个方法主要是解决numpy数值型无法兼容json包报错的问题
 
     Parameters
     -------

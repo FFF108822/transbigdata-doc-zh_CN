@@ -39,7 +39,7 @@ ee = 0.00669342162296594323
 
 def gcj02tobd09(lng, lat):
     """
-    坐标转换`GCJ02` to `BD09`
+    坐标转换 `GCJ02` to `BD09`
 
     Parameters
     -------
@@ -70,7 +70,7 @@ def gcj02tobd09(lng, lat):
 
 def bd09togcj02(bd_lon, bd_lat):
     """
-    坐标转换`BD09` to `GCJ02`
+    坐标转换 `BD09` to `GCJ02`
 
     Parameters
     -------
@@ -103,7 +103,7 @@ def bd09togcj02(bd_lon, bd_lat):
 
 def wgs84togcj02(lng, lat):
     """
-    坐标转换`WGS84` to `GCJ02`
+    坐标转换 `WGS84` to `GCJ02`
 
     Parameters
     -------
@@ -140,7 +140,7 @@ def wgs84togcj02(lng, lat):
 
 def gcj02towgs84(lng, lat):
     """
-    坐标转换`GCJ02` to `WGS84`
+    坐标转换 `GCJ02` to `WGS84`
 
     Parameters
     -------
@@ -177,7 +177,7 @@ def gcj02towgs84(lng, lat):
 
 def wgs84tobd09(lon, lat):
     """
-    坐标转换`WGS84` to `BD09`
+    坐标转换 `WGS84` to `BD09`
 
     Parameters
     -------
@@ -206,7 +206,7 @@ def wgs84tobd09(lon, lat):
 
 def bd09towgs84(lon, lat):
     """
-    坐标转换`BD09` to `WGS84`
+    坐标转换 `BD09` to `WGS84`
 
     Parameters
     -------
@@ -235,7 +235,7 @@ def bd09towgs84(lon, lat):
 
 def bd09mctobd09(x, y):
     """
-    坐标转换`BD09MC` to `BD09`
+    坐标转换 `BD09MC` to `BD09`
 
     Parameters
     -------
@@ -364,16 +364,16 @@ def getdistance(lon1, lat1, lon2, lat2):
 
 def transform_shape(gdf, method):
     '''
-    对地理要素整体做坐标转换
+    对地理要素整体做坐标转换 
 
-    输入地理要素的GeoDataFrame，对整体做坐标转换
+    输入地理要素的GeoDataFrame，对整体做坐标转换 
 
     Parameters
     -------
     gdf : GeoDataFrame
         地理要素
     method : function
-        坐标转换函数
+        坐标转换 函数
 
     return
     -------
@@ -395,7 +395,7 @@ def transform_shape(gdf, method):
 
     ::
 
-        #整体进行坐标转换
+        #整体进行坐标转换 
         >>> import transbigdata as tbd
         >>> Centerline_transformed = tbd.transform_shape(Centerline,tbd.bd09towgs84)
         >>> Centerline_transformed.plot()
