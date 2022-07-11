@@ -2,7 +2,14 @@
 
 
 .. currentmodule:: transbigdata
+  
+.. autosummary::
 
+    ckdnearest
+    ckdnearest_point
+    ckdnearest_line
+    splitline_with_length
+    merge_polygon
 
 ******************************
 GIS处理
@@ -11,11 +18,7 @@ GIS处理
 近邻匹配
 ================
 
-.. autosummary::
 
-    ckdnearest
-    ckdnearest_point
-    ckdnearest_line
 
 
 .. autofunction:: ckdnearest

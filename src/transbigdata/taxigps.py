@@ -36,8 +36,9 @@ import pandas as pd
 def clean_taxi_status(data, col=['VehicleNum', 'Time', 'OpenStatus'],
                       timelimit=None):
     '''
-    删除出租车数据中载客状态瞬间变化的记录，这些记录的存在会影响出行订单判断。
-    判断条件为:如果对同一辆车，上一条记录与下一条记录的载客状态都与本条记录不同，则本条记录应该删去
+    删除出租车数据中载客状态瞬间变化的记录
+    
+    这些记录的存在会影响出行订单判断。判断条件为:如果对同一辆车，上一条记录与下一条记录的载客状态都与本条记录不同，则本条记录应该删去
 
     Parameters
     -------
@@ -78,7 +79,9 @@ def clean_taxi_status(data, col=['VehicleNum', 'Time', 'OpenStatus'],
 def taxigps_to_od(data,
                   col=['VehicleNum', 'Stime', 'Lng', 'Lat', 'OpenStatus']):
     '''
-    出租车OD提取算法，输入出租车GPS数据,提取OD
+    出租车OD识别
+    
+    输入出租车GPS数据,提取OD
 
     Parameters
     -------
@@ -115,6 +118,8 @@ def taxigps_to_od(data,
 def taxigps_traj_point(data, oddata,
                        col=['Vehicleid', 'Time', 'Lng', 'Lat', 'OpenStatus']):
     '''
+    载客与空载的行驶轨迹点提取
+
     输入出租车数据与OD数据，提取载客与空载的行驶路径点
 
     Parameters

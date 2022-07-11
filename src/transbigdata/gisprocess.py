@@ -45,6 +45,8 @@ def ckdnearest(dfA_origin,
                Aname=['lon', 'lat'],
                Bname=['lon', 'lat']):
     '''
+    点与点近邻匹配（DataFrame）
+
     输入两个DataFrame，分别指定经纬度列名，为表A匹配表B中最近点，并计算距离
 
     Parameters
@@ -92,6 +94,8 @@ def ckdnearest(dfA_origin,
 
 def ckdnearest_point(gdA, gdB):
     '''
+    点与点近邻匹配（GeoDataFrame）
+
     输入两个GeoDataFrame，gdfA、gdfB均为点，该方法会为gdfA表连接上gdfB中最近的点，并添加距离字段dist
 
     Parameters
@@ -122,6 +126,8 @@ def ckdnearest_point(gdA, gdB):
 
 def ckdnearest_line(gdfA, gdfB):
     '''
+    点与线近邻匹配(GeoDataFrame)
+
     输入两个GeoDataFrame，其中gdfA为点，gdfB为线，该方法会为gdfA表连接上gdfB中最近的线，并添加距离字段dist
 
     Parameters
@@ -157,6 +163,8 @@ def ckdnearest_line(gdfA, gdfB):
 
 def splitline_with_length(Centerline, maxlength=100):
     '''
+    以设定距离打断线
+
     输入线GeoDataFrame要素，打断为最大长度maxlength的小线段
 
     Parameters
@@ -201,6 +209,8 @@ def splitline_with_length(Centerline, maxlength=100):
 
 def merge_polygon(data, col):
     '''
+    对不同组别的多边形进行合并
+
     输入多边形GeoDataFrame数据，以及分组列名col，对不同组别进行分组的多边形进行合并
 
 
@@ -229,6 +239,8 @@ def merge_polygon(data, col):
 
 def polyon_exterior(data, minarea=0):
     '''
+    对多边形取外边界构成新多边形
+
     输入多边形GeoDataFrame数据，对多边形取外边界构成新多边形
 
     Parameters
@@ -266,7 +278,9 @@ def polyon_exterior(data, minarea=0):
 
 def ellipse_params(data, col=['lon', 'lat'], confidence=95, epsg=None):
     '''
-    置信椭圆参数估计：输入点数据，获取置信椭圆的参数
+    置信椭圆参数估计
+    
+    输入点数据，获取置信椭圆的参数
 
     Parameters
     -------
@@ -313,7 +327,9 @@ def ellipse_params(data, col=['lon', 'lat'], confidence=95, epsg=None):
 
 def ellipse_plot(ellip_params, ax, **kwargs):
     '''
-    置信椭圆绘制：输入置信椭圆的参数，绘制置信椭圆
+    置信椭圆绘制
+    
+    输入置信椭圆的参数，绘制置信椭圆
 
     Parameters
     -------

@@ -37,6 +37,8 @@ from shapely.geometry import LineString
 
 def split_subwayline(line, stop):
     '''
+    切分线路得到断面，可用于可视化
+
     用公交/地铁站点对公交/地铁线进行切分，得到断面，可用于可视化
 
     Parameters
@@ -89,6 +91,8 @@ def split_subwayline(line, stop):
 
 def metro_network(line, stop, transfertime=5, nxgraph=True):
     '''
+    构建地铁网络
+
     输入站点信息，输出网络信息，可用于最短路径与最短k路径生成。该方法依赖于NetworkX。
     地铁出行时间由以下部分构成：地铁运行时间（距离/速度）+停站时间（一般取固定值）+换乘时间（步行时间+等车时间）
 

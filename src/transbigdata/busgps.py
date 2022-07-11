@@ -47,6 +47,8 @@ def busgps_arriveinfo(data, line, stop, col=[
         stopbuffer=200, mintime=300, project_epsg=2416,
         timegap=1800, method='project', projectoutput=False):
     '''
+    识别公交到离站信息
+
     输入公交GPS数据、公交线路与站点的GeoDataFrame，该方法能够识别公交的到离站信息
 
     Parameters
@@ -218,6 +220,8 @@ def busgps_onewaytime(arrive_info, start, end,
                       col=['VehicleId', 'stopname',
                            'arrivetime', 'leavetime']):
     '''
+    计算公交单程耗时
+
     输入到离站信息表arrive_info与站点信息表stop，计算单程耗时
 
     Parameters

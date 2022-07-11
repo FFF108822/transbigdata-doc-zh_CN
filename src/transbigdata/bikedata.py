@@ -38,6 +38,8 @@ def bikedata_to_od(data,
                         'LATITUDE', 'LOCK_STATUS'],
                    startend=None):
     '''
+    识别骑行与停车信息
+
     输入共享单车订单数据（只在开关锁时产生数据），指定列名，提取其中的骑行与停车信息
 
     Parameters

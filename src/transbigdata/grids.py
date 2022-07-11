@@ -194,7 +194,9 @@ def area_to_params(location, accuracy=500, method='rect'):
 
 def GPS_to_grid(lon, lat, params):
     '''
-    GPS数据对应栅格编号。输入数据的经纬度列与栅格参数，输出对应的栅格编号
+    GPS数据对应栅格编号
+    
+    输入数据的经纬度列与栅格参数，输出对应的栅格编号
 
     Parameters
     -------
@@ -228,7 +230,9 @@ def GPS_to_grid(lon, lat, params):
 
 def grid_to_centre(gridid, params):
     '''
-    栅格编号对应栅格中心点经纬度。输入数据的栅格编号与栅格参数，输出对应的栅格中心点
+    栅格编号对应栅格中心点经纬度
+    
+    输入数据的栅格编号与栅格参数，输出对应的栅格中心点
 
     Parameters
     -------
@@ -314,7 +318,9 @@ def grid_to_centre(gridid, params):
 
 def grid_to_polygon(gridid, params):
     '''
-    栅格编号生成栅格的地理信息列。输入数据的栅格编号与栅格参数，输出对应的地理信息列
+    栅格编号生成栅格的地理信息列
+    
+    输入数据的栅格编号与栅格参数，输出对应的地理信息列
 
     Parameters
     -------
@@ -348,6 +354,8 @@ def grid_to_polygon(gridid, params):
 
 def grid_to_area(data, shape, params, col=['LONCOL', 'LATCOL']):
     '''
+    栅格与地理数据空间连接
+
     输入数据（带有栅格经纬度编号两列），矢量图形与栅格化参数，输出数据栅格并对应矢量图形。
 
     Parameters
@@ -432,7 +440,7 @@ def grid_params_optimize(data,
                         c1=0.5,
                         c2=0.5):
     '''
-    提供了三种优化栅格化参数的方法
+    栅格化参数优化方法
 
     Parameters
     -------
@@ -1172,9 +1180,7 @@ Old namespace
 
 def regenerate_params(*args, **kwargs):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.grid_to_params`
+    该方法已经更名为 :func:`transbigdata.grid_to_params`
     '''
     warnings.warn("This method is renamed as transbigdata.grid_to_params")
     return grid_to_params(*args, **kwargs)
@@ -1182,9 +1188,7 @@ def regenerate_params(*args, **kwargs):
 
 def grid_params(*args, **kwargs):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.area_to_params`
+    该方法已经更名为 :func:`transbigdata.area_to_params`
     '''
     warnings.warn("This method is renamed as transbigdata.area_to_params")
     return area_to_params(*args, **kwargs)
@@ -1192,9 +1196,7 @@ def grid_params(*args, **kwargs):
 
 def GPS_to_grids(*args, **kwargs):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.GPS_to_grid`
+    该方法已经更名为 :func:`transbigdata.GPS_to_grid`
     '''
     warnings.warn("This method is renamed as transbigdata.GPS_to_grid")
     return GPS_to_grid(*args, **kwargs)
@@ -1202,9 +1204,7 @@ def GPS_to_grids(*args, **kwargs):
 
 def rect_grids(*args, **kwargs):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.area_to_grid`
+    该方法已经更名为 :func:`transbigdata.area_to_grid`
     '''
     warnings.warn("This method is renamed as transbigdata.area_to_grid")
     return area_to_grid(*args, **kwargs)
@@ -1212,9 +1212,7 @@ def rect_grids(*args, **kwargs):
 
 def gridid_sjoin_shape(*args, **kwargs):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.grid_to_area`
+    该方法已经更名为 :func:`transbigdata.grid_to_area`
     '''
     warnings.warn("This method is renamed as transbigdata.grid_to_area")
     return grid_to_area(*args, **kwargs)
@@ -1222,9 +1220,7 @@ def gridid_sjoin_shape(*args, **kwargs):
 
 def grids_centre(loncol, latcol, params):
     '''
-
-    .. note::
-        该方法已经更名为 :func:`transbigdata.grid_to_centre`
+    该方法已经更名为 :func:`transbigdata.grid_to_centre`
     '''
     warnings.warn("This method is renamed as transbigdata.grid_to_centre")
     return grid_to_centre([loncol, latcol], params)
@@ -1232,9 +1228,7 @@ def grids_centre(loncol, latcol, params):
 
 def gridid_to_polygon(loncol, latcol, params):
     '''
-    
-    .. note::
-        该方法已经更名为 :func:`transbigdata.grid_to_polygon`
+    该方法已经更名为 :func:`transbigdata.grid_to_polygon`
     '''
     warnings.warn("This method is renamed as transbigdata.grid_to_polygon")
     return grid_to_polygon([loncol, latcol], params)

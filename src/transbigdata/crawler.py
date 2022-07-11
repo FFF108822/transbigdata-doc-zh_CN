@@ -50,7 +50,9 @@ from .coordinates import (
 
 def getadmin(keyword, ak, jscode='', subdistricts=False):
     '''
-    输入关键词与高德ak，抓取行政区划gis
+    抓取行政区划
+
+    输入关键词与高德ak，抓取行政区划GeoDataFrame
 
     Parameters
     -------
@@ -149,6 +151,8 @@ def getadmin(keyword, ak, jscode='', subdistricts=False):
 
 def getbusdata(city, keywords, accurate=True):
     '''
+    抓取公交线路的线型与站点
+
     通过输入城市与关键词，获取公交线路的线型与站点
 
     Parameters

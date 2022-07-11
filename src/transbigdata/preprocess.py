@@ -43,7 +43,8 @@ from .coordinates import getdistance
 
 def clean_same(data, col=['VehicleNum', 'Time', 'Lng', 'Lat']):
     '''
-    删除信息与前后数据相同的数据以减少数据量
+    删除信息与前后数据相同的数据以减少数据量  
+
     如：某个体连续n条数据除了时间以外其他信息都相同，则可以只保留首末两条数据
 
     Parameters
@@ -74,7 +75,9 @@ def clean_same(data, col=['VehicleNum', 'Time', 'Lng', 'Lat']):
 def clean_drift(data, col=['VehicleNum', 'Time', 'Lng', 'Lat'],
                 speedlimit=80, dislimit=1000):
     '''
-    删除漂移数据。条件是，此数据与前后的速度都大于speedlimit，但前后数据之间的速度却小于speedlimit。
+    删除漂移数据
+    
+    条件是，此数据与前后的速度都大于speedlimit，但前后数据之间的速度却小于speedlimit。
     传入的数据中时间列如果为datetime格式则计算效率更快
 
     Parameters
@@ -145,7 +148,7 @@ def clean_drift(data, col=['VehicleNum', 'Time', 'Lng', 'Lat'],
 
 def clean_outofbounds(data, bounds, col=['Lng', 'Lat']):
     '''
-    输入研究范围的左下右上经纬度坐标，剔除超出研究范围的数据
+    剔除超出研究范围的数据
 
     Parameters
     -------
@@ -177,6 +180,8 @@ of [lon1,lat1,lon2,lat2]. (lon1,lat1) is the lower left corner and \
 
 def clean_outofshape(data, shape, col=['Lng', 'Lat'], accuracy=500):
     '''
+    剔除超出研究区域的数据
+
     输入研究范围的GeoDataFrame，剔除超出研究区域的数据，计算原理是先栅格化后剔除
 
     Parameters
@@ -215,7 +220,9 @@ def clean_outofshape(data, shape, col=['Lng', 'Lat'], accuracy=500):
 def clean_traj(data, col=['uid', 'str_time', 'lon', 'lat'], tripgap=1800,
                disgap=50000, speedlimit=80):
     '''
-    轨迹数据清洗组合拳（实验中），包括定义时间长度阈值以及距离阈值，超出阈值视为新的轨迹
+    轨迹数据清洗组合拳（实验中）
+    
+    包括定义时间长度阈值以及距离阈值，超出阈值视为新的轨迹
 
     Parameters
     -------
@@ -321,7 +328,9 @@ def dataagg(data, shape, col=['Lng', 'Lat', 'count'], accuracy=500):
 def id_reindex_disgap(data, col=['uid', 'lon', 'lat'], disgap=1000,
                       suffix='_new'):
     '''
-    对数据的ID列重新编号，如果相邻两条记录超过距离，则编号为新id
+    对数据的ID列重新编号
+    
+    如果相邻两条记录超过距离，则编号为新id
 
     Parameters
     -------

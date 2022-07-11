@@ -39,6 +39,8 @@ def mobile_stay_move(data, params,
                      col=['ID', 'dataTime', 'longitude', 'latitude'],
                      activitytime=1800):
     '''
+    识别活动与出行
+
     输入轨迹数据与栅格化参数，识别活动与出行
 
     Parameters
@@ -119,6 +121,8 @@ def mobile_stay_move(data, params,
 
 def mobile_stay_dutation(staydata, col=['stime', 'etime'], start_hour=8, end_hour=20):
     '''
+    识别停留点的白天与夜晚持续时间
+
     输入停留点数据，识别白天与夜晚的持续时间
 
     Parameters
@@ -176,6 +180,8 @@ def mobile_stay_dutation(staydata, col=['stime', 'etime'], start_hour=8, end_hou
 
 def mobile_identify_home(staydata, col=['uid', 'stime', 'etime', 'LONCOL', 'LATCOL'], start_hour=8, end_hour=20):
     '''
+    识别居住地
+
     输入停留点数据识别居住地。规则为夜晚时段停留最长地点。
 
     Parameters
@@ -211,6 +217,8 @@ def mobile_identify_home(staydata, col=['uid', 'stime', 'etime', 'LONCOL', 'LATC
 
 def mobile_identify_work(staydata, col=['uid', 'stime', 'etime', 'LONCOL', 'LATCOL'], minhour=3, start_hour=8, end_hour=20, workdaystart=0, workdayend=4):
     '''
+    识别工作地
+
     输入停留点数据识别工作地。规则为工作日白天时段停留最长地点（每日平均时长大于`minhour`）。
 
     Parameters
@@ -274,6 +282,8 @@ def mobile_identify_work(staydata, col=['uid', 'stime', 'etime', 'LONCOL', 'LATC
 def mobile_plot_activity(data, col=['stime', 'etime', 'LONCOL', 'LATCOL'],
                          figsize=(10, 5), dpi=250):
     '''
+    绘制个体活动图
+
     输入个体的活动数据（单一个体），绘制活动图
 
     Parameters
@@ -358,8 +368,7 @@ def traj_stay_move(data, params,
                    col=['ID', 'dataTime', 'longitude', 'latitude'],
                    activitytime=1800):
     '''
-    .. note::
-        该方法已经更名为 :func:`transbigdata.mobile_stay_move`，旧方法名称依然可以使用。
+    该方法已经更名为 :func:`transbigdata.mobile_stay_move`，旧方法名称依然可以使用。
 
 
     '''
@@ -369,7 +378,6 @@ def plot_activity(data, params,
                   col=['ID', 'dataTime', 'longitude', 'latitude'],
                   activitytime=1800):
     '''
-    .. note::
-        该方法已经更名为 :func:`transbigdata.mobile_plot_activity`，旧方法名称依然可以使用。
+    该方法已经更名为 :func:`transbigdata.mobile_plot_activity`，旧方法名称依然可以使用。
 
     '''

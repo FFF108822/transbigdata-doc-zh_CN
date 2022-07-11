@@ -39,7 +39,7 @@ ee = 0.00669342162296594323
 
 def gcj02tobd09(lng, lat):
     """
-    Convert coordinates from GCJ02 to BD09
+    坐标转换`GCJ02` to `BD09`
 
     Parameters
     -------
@@ -70,7 +70,7 @@ def gcj02tobd09(lng, lat):
 
 def bd09togcj02(bd_lon, bd_lat):
     """
-    Convert coordinates from BD09 to GCJ02
+    坐标转换`BD09` to `GCJ02`
 
     Parameters
     -------
@@ -103,7 +103,7 @@ def bd09togcj02(bd_lon, bd_lat):
 
 def wgs84togcj02(lng, lat):
     """
-    Convert coordinates from WGS84 to GCJ02
+    坐标转换`WGS84` to `GCJ02`
 
     Parameters
     -------
@@ -140,7 +140,7 @@ def wgs84togcj02(lng, lat):
 
 def gcj02towgs84(lng, lat):
     """
-    Convert coordinates from GCJ02 to WGS84
+    坐标转换`GCJ02` to `WGS84`
 
     Parameters
     -------
@@ -177,7 +177,7 @@ def gcj02towgs84(lng, lat):
 
 def wgs84tobd09(lon, lat):
     """
-    Convert coordinates from WGS84 to BD09
+    坐标转换`WGS84` to `BD09`
 
     Parameters
     -------
@@ -206,7 +206,7 @@ def wgs84tobd09(lon, lat):
 
 def bd09towgs84(lon, lat):
     """
-    Convert coordinates from BD09 to WGS84
+    坐标转换`BD09` to `WGS84`
 
     Parameters
     -------
@@ -235,7 +235,7 @@ def bd09towgs84(lon, lat):
 
 def bd09mctobd09(x, y):
     """
-    Convert coordinates from BD09MC to BD09
+    坐标转换`BD09MC` to `BD09`
 
     Parameters
     -------
@@ -314,6 +314,8 @@ def transformlng(lng, lat):
 
 def getdistance(lon1, lat1, lon2, lat2):
     '''
+    经纬度换算距离
+
     按经度1，纬度1，经度2，纬度2 （十进制度数）顺序输入起终点经纬度，为DataFrame的列，获取距离（米），基于numpy列运算
 
     Parameters
@@ -362,6 +364,8 @@ def getdistance(lon1, lat1, lon2, lat2):
 
 def transform_shape(gdf, method):
     '''
+    对地理要素整体做坐标转换
+
     输入地理要素的GeoDataFrame，对整体做坐标转换
 
     Parameters
