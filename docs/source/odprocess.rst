@@ -5,6 +5,9 @@
 数据聚合集计
 ***************
 
+方法总览
+-------------
+
 .. autosummary::
 
     dataagg
@@ -12,12 +15,12 @@
     odagg_shape
     
 数据集计
-==========
+-------------
 
 .. autofunction:: dataagg
 
 OD集计
-==========
+-------------
 
 .. autofunction:: odagg_grid
 

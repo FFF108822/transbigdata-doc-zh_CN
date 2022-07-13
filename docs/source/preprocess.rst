@@ -6,6 +6,9 @@
 数据预处理
 ******************************
  
+方法总览
+-------------
+
  
 .. autosummary::
 
@@ -17,15 +20,25 @@
     id_reindex
     id_reindex_disgap
 
-.. autofunction:: clean_same
 
-.. autofunction:: clean_drift
+区域筛选
+-------------
 
 .. autofunction:: clean_outofbounds
 
 .. autofunction:: clean_outofshape
 
+点数据预处理
+-------------
+
+.. autofunction:: clean_same
+
+.. autofunction:: clean_drift
+
 .. autofunction:: clean_traj
+
+ID处理
+-------------
 
 .. autofunction:: id_reindex
 

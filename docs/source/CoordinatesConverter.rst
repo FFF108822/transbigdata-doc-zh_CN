@@ -5,6 +5,9 @@
 坐标距离
 ******************************
 
+方法总览
+-------------
+
 .. autosummary::
     
     gcj02tobd09
@@ -18,10 +21,11 @@
     getdistance
 
 火星坐标系互转
-=============================
+-------------
+
 
 坐标互转方法
---------------------------
+=============================
 
 TransBigData包提供了GCJ02,BD09,BD09mc,WGS94坐标系互转。
 
@@ -51,13 +55,13 @@ TransBigData包提供了GCJ02,BD09,BD09mc,WGS94坐标系互转。
   >>> data['Lng'],data['Lat'] = tbd.bd09towgs84(data['Lng'],data['Lat'])  
   >>> data['Lng'],data['Lat'] = tbd.bd09mctobd09(data['Lng'],data['Lat']) 
 
-对地理要素转换坐标
---------------------------
+对地理要素整体转换坐标
+=============================
 
 .. autofunction:: transform_shape
 
 
 经纬度计算距离
-=============================
+-------------
 
 .. autofunction:: getdistance

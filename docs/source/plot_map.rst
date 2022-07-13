@@ -7,13 +7,16 @@
 底图加载
 ***************
 
+方法总览
+-------------
+
 .. autosummary::
 
     plot_map
     plotscale
 
 使用前的设置
-=============================
+-------------
 
 | TransBigData包提供了在matplotlib上绘制地图底图的功能，底图由mapbox提供，坐标系为WGS84。如果你没有mapbox token，在绘制地图时选择style=0可进行底图绘制（OpenStreetMap的底图）。
 | 如果你要使用style为1-10的地图底图（Mapbox的底图），则首先需要点击\ `这个链接 <https://account.mapbox.com/auth/signin/?route-to=%22https://account.mapbox.com/%22>`__\ 注册一个mapbox的账号，mapbox上注册成为开发者，并获取到一个mapbox token。 `这个链接 <https://docs.mapbox.com/help/getting-started/access-tokens/#how-access-tokens-work>`__\ 介绍了mapbox token的作用。
@@ -34,6 +37,8 @@
     tbd.set_imgsavepath(r'/Users/xxxx/xxxx/')
     #如果是windows系统，路径这么写，最后注意要两个斜杠以防转义
     tbd.set_imgsavepath(r'E:\pythonscript\xxx\\')
+
+
 
 设置好后，下次绘制底图时，会在你设置的路径下创建一个tileimg文件夹，底图都放在里面  
 尝试一下下面的代码，看看能否成功绘制底图
@@ -58,80 +63,84 @@
 
 .. image:: plot_map/output_6_0.png
 
+底图绘制
+-------------
 
 .. autofunction:: plot_map
 
+
+
 底图样式1：streets
-----------------------------------------
+======================
 
 .. image:: plot_map/1.png
 
 
 底图样式2：outdoors
-----------------------------------------
+======================
 
 .. image:: plot_map/2.png
 
 
 底图样式3：satellite
-----------------------------------------
+======================
 
 .. image:: plot_map/3.png
 
 
 底图样式4：light
-----------------------------------------
+======================
 
 .. image:: plot_map/4.png
 
 
 底图样式5：dark
-----------------------------------------
+======================
 
 .. image:: plot_map/5.png
 
 
 底图样式6：light-ch（中文）
-----------------------------------------
+======================
 
 .. image:: plot_map/6.png
 
 
 底图样式7：ice creem
-----------------------------------------
+======================
 
 .. image:: plot_map/7.png
 
 
 底图样式8：night
-----------------------------------------
+======================
 
 .. image:: plot_map/8.png
 
 
 底图样式9：terrain
-----------------------------------------
+======================
 
 .. image:: plot_map/9.png
 
 
 底图样式10：basic blue
-----------------------------------------
+======================
 
 .. image:: plot_map/10.png
 
 底图样式11：light(无标注)
-----------------------------------------
+======================
 
 .. image:: plot_map/11.png
 
 底图样式12：dark(无标注)
-----------------------------------------
+======================
 
 .. image:: plot_map/12.png
 
 自定义样式：0.4.8以上版本支持
-----------------------------------------
+======================
 
 需要传入mapbox的样式代码：
 
@@ -139,21 +148,13 @@
 
     tbd.plot_map(plt,bounds,zoom = 11,style = 'mapbox://styles/ni1o1/cl38pljx0006r14qp7ioy7gcc')
 
-用法
-----------------------------------------
 
-::
-
-    #设定显示范围
-    bounds = [lon1,lat1,lon2,lat2]  
-    tbd.plot_map(plt,bounds,zoom = 12,style = 4)  
+ 
 
 指北针和比例尺
-=============================
+-------------------
 
 .. autofunction:: plotscale
 
 
-::
-
-    tbd.plotscale(ax,bounds = bounds,textsize = 10,compasssize = 1,accuracy = 2000,rect = [0.06,0.03])  
+ 

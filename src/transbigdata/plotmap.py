@@ -334,6 +334,13 @@ def plot_map(plt, bounds, zoom='auto', style=0, printlog=False):
     style : number
         地图底图的样式，可选1-10，对应分别如下（需要plot_map包在0.3.3版本以上）   
 
+    Examples
+    -----------
+    ::
+
+        #设定显示范围
+        bounds = [lon1,lat1,lon2,lat2]  
+        tbd.plot_map(plt,bounds,zoom = 12,style = 4) 
     '''
     access_token = read_mapboxtoken()
     if access_token == '':
@@ -384,7 +391,13 @@ def plotscale(ax, bounds, textcolor='k', textsize=8, compasssize=1,
     style : number
         1或2，比例尺样式                                             
     rect : List
-        比例尺在图中的大致位置，如[0.9,0.9]则在右上角    
+        比例尺在图中的大致位置，如[0.9,0.9]则在右上角   
+
+    Examples
+    ----------
+    ::
+
+        tbd.plotscale(ax,bounds = bounds,textsize = 10,compasssize = 1,accuracy = 2000,rect = [0.06,0.03])  
     '''
     import math
     lon1 = bounds[0]

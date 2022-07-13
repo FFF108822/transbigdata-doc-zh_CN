@@ -5,6 +5,9 @@
 轨迹处理
 ******************************
 
+方法总览
+-------------
+
 .. autosummary::
     
     points_to_traj
@@ -12,13 +15,13 @@
     traj_sparsify
 
 轨迹线型生成
-==================
+-------------
 
 .. autofunction:: points_to_traj
 
 
 轨迹增密与稀疏化
-==================
+-------------
 
 .. autofunction:: traj_densify
 
@@ -26,7 +29,7 @@
 
 
 停留与出行识别
-==================
+-------------
 .. autofunction:: traj_stay_move
 
 .. autofunction:: plot_activity
