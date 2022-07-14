@@ -117,19 +117,12 @@ TransBigData支持三角形、六边形网格，也支持为网格赋予旋转�
 
 .. plot:: index_fig/fig2.py
 
-使用示例
----------------
-.. raw:: html
-   :file: gallery/html/grid.html
-
-
 相关链接
 ---------------
 
 * 小旭学长的b站： https://space.bilibili.com/3051484
-* 小旭学长的七天入门交通时空大数据分析课程（零基础免费课）： https://www.lifangshuju.com/#/introduce/166  
-* 小旭学长的交通时空大数据分析课程： https://www.lifangshuju.com/#/introduce/154  
-* 小旭学长的数据可视化课程： https://www.lifangshuju.com/#/introduce/165  
+* 【零基础】小旭学长的大数据博士带你零基础入门Python时空大数据分析： https://www.bilibili.com/video/BV1Gr4y1q7F9  
+* 【进阶】小旭学长的交通时空大数据分析课程： https://www.lifangshuju.com/#/introduce/154  
 * 本项目的github页面： https://github.com/ni1o1/transbigdata/  
 * 有bug请在这个页面提交： https://github.com/ni1o1/transbigdata/issues
 
